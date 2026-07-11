@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#111936">
+  <meta name="theme-color" content="#101936">
+  <meta name="description" content="毎日の生活習慣で浮遊島を育てる、家庭向け冒険アプリ。">
   <title>冬休みラボ｜ライフクエスト</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -19,6 +20,7 @@
         <div>
           <p class="eyebrow">冬休みラボ・第1実験</p>
           <h1>ライフクエスト</h1>
+          <p class="subtitle">空島の目覚め</p>
         </div>
         <div class="level-chip" aria-label="現在のレベル">
           <span>LEVEL</span>
@@ -26,10 +28,22 @@
         </div>
       </header>
 
+      <section class="status-row" aria-label="冒険の記録">
+        <div class="status-chip"><span>💎</span><div><small>ひかり石</small><strong id="crystalCount">0</strong></div></div>
+        <div class="status-chip"><span>🔥</span><div><small>連続冒険</small><strong><span id="streakCount">0</span>日</strong></div></div>
+        <div class="status-chip"><span>🏺</span><div><small>発見した秘宝</small><strong id="relicCount">0</strong></div></div>
+      </section>
+
       <section class="story-card glass">
-        <p class="story-kicker">空島通信</p>
-        <h2 id="storyTitle">ねむり島が、君を待っている。</h2>
-        <p id="storyText">今日の行動が、島のエネルギーになる。5つのクエストを達成して、空に光を取り戻そう。</p>
+        <div>
+          <p class="story-kicker">空島通信</p>
+          <h2 id="storyTitle">ねむり島が、君を待っている。</h2>
+          <p id="storyText">今日の行動が、島のエネルギーになる。8つの光を集めて島を目覚めさせよう。</p>
+        </div>
+        <div class="goal-badge">
+          <span>今日の目標</span>
+          <strong><span id="goalCount">0</span> / 8</strong>
+        </div>
       </section>
 
       <section class="world" aria-label="成長する浮遊島">
@@ -47,6 +61,9 @@
             <div class="tree tree-two"><span></span></div>
             <div class="crystal crystal-one"></div>
             <div class="crystal crystal-two"></div>
+            <div class="garden"><i></i><i></i><i></i></div>
+            <div class="windmill"><span></span></div>
+            <div class="tower">✦</div>
             <div class="waterfall"></div>
             <div class="island-rock"></div>
           </div>
@@ -55,6 +72,7 @@
             <span class="spirit-eye right"></span>
             <span class="spirit-mouth"></span>
           </div>
+          <div class="dragon" aria-hidden="true">🐉</div>
         </div>
         <div class="progress-orbit" aria-label="島のエネルギー">
           <svg viewBox="0 0 120 120" role="img" aria-label="達成率">
@@ -65,56 +83,57 @@
         </div>
       </section>
 
+      <section class="daily-event glass" id="dailyEvent">
+        <div class="event-icon" id="eventIcon">🌈</div>
+        <div class="event-copy">
+          <p class="eyebrow">TODAY'S SKY EVENT</p>
+          <h2 id="eventName">今日の空イベント</h2>
+          <p id="eventDescription"></p>
+          <div class="event-conditions" id="eventConditions"></div>
+        </div>
+        <div class="event-reward">
+          <span>秘宝</span>
+          <strong id="eventReward">？？？</strong>
+        </div>
+      </section>
+
       <section class="quest-panel glass">
         <div class="quest-heading">
           <div>
             <p class="eyebrow">TODAY'S MISSION</p>
-            <h2>今日のクエスト</h2>
+            <h2>今日の冒険クエスト</h2>
+            <p class="quest-note">8個で冒険クリア。全部できたら「伝説の一日」！</p>
           </div>
-          <p><strong id="doneCount">0</strong> / 5</p>
+          <p><strong id="doneCount">0</strong> / <span id="questTotal">0</span></p>
         </div>
 
-        <div class="quest-grid" id="questGrid">
-          <button class="quest" data-id="wake" data-xp="20">
-            <span class="quest-icon">🌅</span><span><strong>太陽より先に起きる</strong><small>早起きして朝の力を集めよう</small></span><span class="quest-check">✓</span>
-          </button>
-          <button class="quest" data-id="meal" data-xp="20">
-            <span class="quest-icon">🍚</span><span><strong>元気の燃料を食べる</strong><small>食事を食べて島をあたためよう</small></span><span class="quest-check">✓</span>
-          </button>
-          <button class="quest" data-id="study" data-xp="25">
-            <span class="quest-icon">📚</span><span><strong>知識のかけらを集める</strong><small>勉強して新しい道を見つけよう</small></span><span class="quest-check">✓</span>
-          </button>
-          <button class="quest" data-id="exercise" data-xp="20">
-            <span class="quest-icon">⚡</span><span><strong>からだの雷を呼び起こす</strong><small>運動して空島に風を起こそう</small></span><span class="quest-check">✓</span>
-          </button>
-          <button class="quest" data-id="help" data-xp="15">
-            <span class="quest-icon">🧹</span><span><strong>家族の町を助ける</strong><small>お手伝いでやさしさの光を届けよう</small></span><span class="quest-check">✓</span>
-          </button>
-        </div>
+        <div class="quest-grid" id="questGrid"></div>
       </section>
 
       <section class="reward glass" id="rewardCard">
-        <div class="reward-icon">🥚</div>
+        <div class="reward-icon" id="rewardIcon">🥚</div>
         <div>
           <p class="eyebrow">NEXT DISCOVERY</p>
           <h2 id="rewardTitle">ふしぎなタマゴ</h2>
-          <p id="rewardText">クエストを3つ達成すると、中から仲間の気配が……。</p>
+          <p id="rewardText">クエストを進めると、島に新しい命と建物が現れる。</p>
         </div>
       </section>
 
       <footer>
-        <button class="reset-button" id="resetButton">今日の記録をリセット</button>
+        <button class="reset-button" id="resetButton" type="button">今日の記録をリセット</button>
         <p>記録はこの端末のブラウザ内だけに保存されます。</p>
       </footer>
     </section>
   </main>
 
   <div class="celebration" id="celebration" aria-hidden="true">
+    <div class="celebration-sparks" aria-hidden="true"></div>
     <div class="celebration-card">
-      <p>MISSION COMPLETE</p>
-      <h2>ねむり島が目を覚ました！</h2>
-      <span>明日は、雲の向こうに新しい島が現れるかも。</span>
-      <button id="closeCelebration">冒険を続ける</button>
+      <p id="celebrationKicker">MISSION COMPLETE</p>
+      <div class="celebration-icon" id="celebrationIcon">🌟</div>
+      <h2 id="celebrationTitle">ねむり島が目を覚ました！</h2>
+      <span id="celebrationText">今日の君の行動が、空に新しい道を作った。</span>
+      <button id="closeCelebration" type="button">冒険を続ける</button>
     </div>
   </div>
 
