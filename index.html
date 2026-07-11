@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101936">
-  <meta name="description" content="朝は冒険シートを印刷し、夜は家族で振り返る生活習慣アプリ。">
+  <meta name="description" content="朝は冒険シート、夜は家族で振り返る生活習慣アプリ。">
   <title>冬休みラボ｜ライフクエスト</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app-shell">
-    <section class="sky" aria-label="空島の冒険画面">
+    <section class="sky">
       <div class="stars" aria-hidden="true"></div>
       <div class="aurora aurora-one" aria-hidden="true"></div>
       <div class="aurora aurora-two" aria-hidden="true"></div>
@@ -18,7 +18,7 @@
 
       <header class="topbar">
         <div>
-          <p class="eyebrow">冬休みラボ・第1実験</p>
+          <p class="eyebrow">冬休みラボ・家族専用</p>
           <h1>ライフクエスト</h1>
           <p class="subtitle">空島の目覚め</p>
         </div>
@@ -28,36 +28,50 @@
         </div>
       </header>
 
-      <section class="control-deck glass" aria-label="家族で使うための設定">
-        <div class="control-copy">
-          <p class="eyebrow">FAMILY WORKFLOW</p>
-          <h2>朝は紙、夜は家族で入力</h2>
-          <p>学年を選んで朝に1枚印刷。日中は紙へチェックし、夜にこの画面へ記録します。</p>
+      <section class="family-deck glass" aria-label="家族メンバー選択">
+        <div class="family-heading">
+          <div>
+            <p class="eyebrow">WHOSE ADVENTURE?</p>
+            <h2>だれの冒険を開く？</h2>
+          </div>
+          <span class="today-label" id="todayLabel"></span>
         </div>
 
-        <div class="profile-switch" id="profileSwitch" aria-label="学年モード">
-          <button type="button" data-profile="lower">小学低学年</button>
-          <button type="button" data-profile="upper">小学高学年</button>
-          <button type="button" data-profile="middle">中学生</button>
+        <div class="member-switch" id="memberSwitch">
+          <button type="button" data-member="son">
+            <span class="member-avatar">🧑‍🚀</span>
+            <span><strong>長男</strong><small>中学生</small></span>
+          </button>
+          <button type="button" data-member="eldest">
+            <span class="member-avatar">👩‍🚀</span>
+            <span><strong>長女</strong><small>小学校高学年</small></span>
+          </button>
+          <button type="button" data-member="youngest">
+            <span class="member-avatar">🧒</span>
+            <span><strong>次女</strong><small>小学低学年</small></span>
+          </button>
         </div>
 
-        <label class="name-field">
-          <span>冒険者の名前</span>
-          <input id="childName" type="text" maxlength="20" placeholder="名前を入力（印刷にも反映）">
-        </label>
-
-        <div class="workflow-actions">
-          <button class="primary-button" id="printButton" type="button"><span>🖨️</span> 朝の冒険シートを印刷</button>
-          <button class="secondary-button" id="reviewButton" type="button"><span>🌙</span> 夜のふりかえりを始める</button>
+        <div class="workflow-strip" aria-label="一日の使い方">
+          <div><span>1</span><strong>朝</strong><small>紙を渡す</small></div>
+          <i aria-hidden="true">→</i>
+          <div><span>2</span><strong>日中</strong><small>紙にチェック</small></div>
+          <i aria-hidden="true">→</i>
+          <div><span>3</span><strong>夜</strong><small>家族で入力</small></div>
         </div>
-        <p class="privacy-note">記録はこの端末のブラウザ内だけに保存されます。</p>
+
+        <div class="main-actions">
+          <button class="primary-button" id="previewPaperButton" type="button"><span>📄</span><span><strong>今日のシートを見る</strong><small>印刷前にA4を確認</small></span></button>
+          <button class="secondary-button" id="reviewButton" type="button"><span>🌙</span><span><strong>夜の入力を始める</strong><small>紙を見ながらチェック</small></span></button>
+        </div>
+        <p class="privacy-note">いまは端末内保存です。使い勝手確認後にSupabase同期へ切り替えます。</p>
       </section>
 
       <section class="status-row" aria-label="冒険の記録">
-        <div class="status-chip"><span>🎒</span><div><small>現在のコース</small><strong id="profileLabel">中学生</strong></div></div>
+        <div class="status-chip"><span id="memberIcon">🧑‍🚀</span><div><small>冒険者</small><strong id="memberLabel">長男</strong></div></div>
         <div class="status-chip"><span>💎</span><div><small>ひかり石</small><strong id="crystalCount">0</strong></div></div>
         <div class="status-chip"><span>🔥</span><div><small>連続冒険</small><strong><span id="streakCount">0</span>日</strong></div></div>
-        <div class="status-chip"><span>🏺</span><div><small>発見した秘宝</small><strong id="relicCount">0</strong></div></div>
+        <div class="status-chip"><span>🏺</span><div><small>秘宝</small><strong id="relicCount">0</strong></div></div>
       </section>
 
       <section class="story-card glass">
@@ -79,10 +93,7 @@
           <div class="island-glow" aria-hidden="true"></div>
           <div class="island">
             <div class="grass"></div>
-            <div class="home">
-              <div class="roof"></div>
-              <div class="house-body"><span class="window"></span><span class="door"></span></div>
-            </div>
+            <div class="home"><div class="roof"></div><div class="house-body"><span class="window"></span><span class="door"></span></div></div>
             <div class="tree tree-one"><span></span></div>
             <div class="tree tree-two"><span></span></div>
             <div class="crystal crystal-one"></div>
@@ -93,18 +104,11 @@
             <div class="waterfall"></div>
             <div class="island-rock"></div>
           </div>
-          <div class="spirit" id="spirit" aria-label="空島の案内役モコ">
-            <span class="spirit-eye left"></span>
-            <span class="spirit-eye right"></span>
-            <span class="spirit-mouth"></span>
-          </div>
+          <div class="spirit" aria-label="案内役モコ"><span class="spirit-eye left"></span><span class="spirit-eye right"></span><span class="spirit-mouth"></span></div>
           <div class="dragon" aria-hidden="true">🐉</div>
         </div>
         <div class="progress-orbit" aria-label="島のエネルギー">
-          <svg viewBox="0 0 120 120" role="img" aria-label="達成率">
-            <circle class="orbit-track" cx="60" cy="60" r="52"></circle>
-            <circle class="orbit-value" id="orbitValue" cx="60" cy="60" r="52"></circle>
-          </svg>
+          <svg viewBox="0 0 120 120"><circle class="orbit-track" cx="60" cy="60" r="52"></circle><circle class="orbit-value" id="orbitValue" cx="60" cy="60" r="52"></circle></svg>
           <div><strong id="energy">0</strong><span>%</span></div>
         </div>
       </section>
@@ -117,18 +121,15 @@
           <p id="eventDescription"></p>
           <div class="event-conditions" id="eventConditions"></div>
         </div>
-        <div class="event-reward">
-          <span>秘宝</span>
-          <strong id="eventReward">？？？</strong>
-        </div>
+        <div class="event-reward"><span>秘宝</span><strong id="eventReward">？？？</strong></div>
       </section>
 
       <section class="quest-panel glass" id="nightReview">
         <div class="quest-heading">
           <div>
             <p class="eyebrow">NIGHT REVIEW</p>
-            <h2>家族で今日をふりかえる</h2>
-            <p class="quest-note" id="questNote">紙のチェックを見ながら、できたクエストを押してください。</p>
+            <h2><span id="reviewMemberName">長男</span>の今日を確認</h2>
+            <p class="quest-note" id="questNote">朝の紙を見ながら、できた項目を押してください。</p>
           </div>
           <p><strong id="doneCount">0</strong> / <span id="questTotal">0</span></p>
         </div>
@@ -136,85 +137,44 @@
         <div class="quest-groups" id="questGrid"></div>
 
         <section class="reflection-card">
-          <label>
-            <span>今日いちばんがんばったこと</span>
-            <textarea id="childReflection" rows="3" maxlength="180" placeholder="子どもの言葉で短く残そう"></textarea>
-          </label>
-          <label>
-            <span>家族からのひとこと</span>
-            <textarea id="familyMessage" rows="3" maxlength="180" placeholder="できたことを具体的にほめよう"></textarea>
-          </label>
-          <button class="complete-review-button" id="completeReviewButton" type="button">今日のふりかえりを完了する</button>
-          <p class="review-status" id="reviewStatus">まだ夜のふりかえりは完了していません。</p>
+          <label><span>本人：今日いちばん頑張ったこと</span><textarea id="childReflection" rows="3" maxlength="180" placeholder="短くてもOK。本人の言葉を残そう"></textarea></label>
+          <label><span>家族からのひとこと</span><textarea id="familyMessage" rows="3" maxlength="180" placeholder="できた行動を具体的にほめよう"></textarea></label>
+          <button class="complete-review-button" id="completeReviewButton" type="button">今日の記録を保存する</button>
+          <p class="review-status" id="reviewStatus">まだ今日の記録は保存されていません。</p>
         </section>
       </section>
 
       <section class="reward glass" id="rewardCard">
         <div class="reward-icon" id="rewardIcon">🥚</div>
-        <div>
-          <p class="eyebrow">NEXT DISCOVERY</p>
-          <h2 id="rewardTitle">ふしぎなタマゴ</h2>
-          <p id="rewardText">クエストを進めると、島に新しい命と建物が現れる。</p>
-        </div>
+        <div><p class="eyebrow">NEXT DISCOVERY</p><h2 id="rewardTitle">ふしぎなタマゴ</h2><p id="rewardText">クエストを進めると、島に新しい命と建物が現れる。</p></div>
       </section>
 
       <footer>
         <button class="reset-button" id="resetButton" type="button">今日の記録をリセット</button>
-        <p>朝の紙は書き込み用、夜の画面は家族の会話と記録用です。</p>
+        <p>朝は紙だけ、夜に数分だけ画面を使う設計です。</p>
       </footer>
     </section>
   </main>
 
-  <section class="print-sheet" id="printSheet" aria-hidden="true">
-    <header class="print-header">
-      <div>
-        <p>冬休みラボ</p>
-        <h1>ライフクエスト 冒険シート</h1>
-      </div>
-      <div class="print-island">☁️🏝️☁️</div>
-    </header>
-    <div class="print-meta">
-      <span>日付：<strong id="printDate"></strong></span>
-      <span>コース：<strong id="printProfile"></strong></span>
-      <span>名前：<strong id="printName"></strong></span>
+  <div class="paper-modal" id="paperModal" aria-hidden="true">
+    <div class="paper-toolbar">
+      <div><strong>印刷プレビュー</strong><span>A4縦・1枚</span></div>
+      <div><button id="closePaperButton" type="button">閉じる</button><button class="print-now-button" id="printNowButton" type="button">印刷する</button></div>
     </div>
-    <section class="print-event">
-      <div class="print-event-icon" id="printEventIcon">🌈</div>
-      <div>
-        <p>今日の秘密ミッション</p>
-        <h2 id="printEventName"></h2>
-        <p id="printEventDescription"></p>
-        <p class="print-event-condition" id="printEventCondition"></p>
-      </div>
-      <div class="secret-box">秘宝<br><strong>？？？</strong></div>
-    </section>
-    <section>
-      <div class="print-section-title">
-        <h2>今日の冒険クエスト</h2>
-        <p><span id="printGoal"></span>個できたら冒険クリア！</p>
-      </div>
-      <div class="print-quests" id="printQuestList"></div>
-    </section>
-    <section class="print-reflection">
-      <div><h3>今日いちばんがんばったこと</h3><span></span><span></span></div>
-      <div><h3>家族からのひとこと</h3><span></span><span></span></div>
-    </section>
-    <footer class="print-footer">
-      <p>夜になったら家族で画面を開き、紙を見ながら冒険の結果を入力しよう。</p>
-      <div>今日の冒険：　□ クリア　　□ 伝説の一日</div>
-    </footer>
-  </section>
-
-  <div class="celebration" id="celebration" aria-hidden="true">
-    <div class="celebration-sparks" aria-hidden="true"></div>
-    <div class="celebration-card">
-      <p id="celebrationKicker">MISSION COMPLETE</p>
-      <div class="celebration-icon" id="celebrationIcon">🌟</div>
-      <h2 id="celebrationTitle">ねむり島が目を覚ました！</h2>
-      <span id="celebrationText">今日の行動が、空に新しい道を作った。</span>
-      <button id="closeCelebration" type="button">冒険を続ける</button>
+    <div class="paper-stage">
+      <section class="print-sheet" id="printSheet">
+        <header class="print-header"><div><p>冬休みラボ</p><h1>ライフクエスト 冒険シート</h1></div><div class="print-island">☁️🏝️☁️</div></header>
+        <div class="print-meta"><span>日付：<strong id="printDate"></strong></span><span>冒険者：<strong id="printName"></strong></span><span>コース：<strong id="printProfile"></strong></span></div>
+        <section class="print-event"><div class="print-event-icon" id="printEventIcon">🌈</div><div><p>今日の秘密ミッション</p><h2 id="printEventName"></h2><p id="printEventDescription"></p><p class="print-event-condition" id="printEventCondition"></p></div><div class="secret-box">秘宝<br><strong>？？？</strong></div></section>
+        <section><div class="print-section-title"><h2>今日の冒険クエスト</h2><p><span id="printGoal"></span>個できたら冒険クリア！</p></div><div class="print-quests" id="printQuestList"></div></section>
+        <section class="print-reflection"><div><h3>今日いちばん頑張ったこと</h3><span></span><span></span></div><div><h3>家族からのひとこと</h3><span></span><span></span></div></section>
+        <footer class="print-footer"><p>夜になったら家族で画面を開き、紙を見ながら結果を入力しよう。</p><div>今日の冒険： □クリア　□伝説の一日</div></footer>
+      </section>
     </div>
   </div>
+
+  <div class="celebration" id="celebration" aria-hidden="true"><div class="celebration-card"><p id="celebrationKicker">MISSION COMPLETE</p><div class="celebration-icon" id="celebrationIcon">🌟</div><h2 id="celebrationTitle">ねむり島が目を覚ました！</h2><span id="celebrationText">今日の行動が、新しい空路を作った。</span><button id="closeCelebration" type="button">冒険を続ける</button></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>
