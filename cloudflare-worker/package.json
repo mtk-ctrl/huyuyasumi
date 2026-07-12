@@ -1,0 +1,14 @@
+{
+  "name": "lifequest-cloudflare-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute lifequest-db --remote --file=./schema.sql",
+    "check": "node --check src/index.js",
+    "test": "node test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
