@@ -19,17 +19,28 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check script.js
-          node --check supabase-sync.js
+          node --check cloudflare-config.js
+          node --check cloudflare-sync.js
+          node --check cloudflare-worker/src/index.js
+          node cloudflare-worker/test.mjs
 
-      - name: Parse HTML
+      - name: Parse HTML and D1 schema
         run: |
           python - <<'PY'
           from html.parser import HTMLParser
           from pathlib import Path
+          import sqlite3
 
           class Parser(HTMLParser):
               pass
 
           Parser().feed(Path("index.html").read_text(encoding="utf-8"))
-          print("index.html parsed successfully")
+
+          connection = sqlite3.connect(":memory:")
+          connection.executescript(Path("cloudflare-worker/schema.sql").read_text(encoding="utf-8"))
+          table = connection.execute(
+              "select name from sqlite_master where type='table' and name='family_state'"
+          ).fetchone()
+          assert table, "family_state table was not created"
+          print("index.html and D1 schema parsed successfully")
           PY
