@@ -3,7 +3,7 @@
 ## 1. ライフクエスト：空島の目覚め
 
 ### 状態
-家族3人向けUI・紙運用・Supabase同期機能を実装済み。Supabaseプロジェクトの接続設定待ち。
+家族3人向けUI・紙運用・Cloudflare Worker＋D1同期機能を実装済み。Cloudflare側の作成と接続設定待ち。
 
 ### 目的
 子どもの生活習慣を、毎日遊びたくなる冒険体験に変える。
@@ -42,7 +42,7 @@
 4. 夜に家族で画面を開く
 5. 紙を見ながら達成状況を入力する
 6. 子どもの振り返りと家族からのメッセージを保存する
-7. ログイン中はSupabaseへ同期し、スマホとPCで同じ記録を使う
+7. クラウド接続中はCloudflare Worker経由でD1へ同期し、スマホとPCで同じ記録を使う
 
 ### 実装した機能
 - 長男・長女・次女の固定3プロフィール
@@ -59,18 +59,19 @@
 - 浮遊島の段階的な成長と特別演出
 - 旧バージョンから家族3人データへの移行
 - 端末内へ即時保存するオフライン優先動作
-- Supabase Authによる保護者1アカウントのログイン
-- Supabaseへの自動同期・手動同期
+- 家族用キーによるCloudflare Workerのアクセス制御
+- Cloudflare D1への自動同期・手動同期
 - スマホとPCで更新日時が新しい記録を採用する同期処理
-- RLSによりログイン本人だけが記録を読み書きできるSQL
+- 接続失敗やオフライン時も端末内保存を継続する処理
 - スマートフォン対応
 - 動きを減らす端末設定への対応
 
-### Supabase接続に必要な残作業
-- 保護者がSupabaseプロジェクトを作成する
-- `supabase/schema.sql` をSQL Editorで実行する
-- Authenticationで保護者アカウントを1つ作成する
-- Project URLとPublishable keyを `supabase-config.js` に設定する
+### Cloudflare接続に必要な残作業
+- 保護者がCloudflareアカウントでD1データベースを1つ作成する
+- `cloudflare-worker/schema.sql` をD1 Consoleで実行する
+- Workerを作成し、D1を変数名 `DB` でバインドする
+- WorkerのSecret `FAMILY_ACCESS_KEY` を設定する
+- Worker URLを `cloudflare-config.js` に設定する
 
 ### 次の開発候補
 - 起床・就寝時刻や学習時間を家庭ごとに変更する保護者設定
