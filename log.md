@@ -126,3 +126,33 @@
 - ログイン本人だけが記録を読み書きできるRLSポリシーを追加
 - Supabaseプロジェクト作成から接続設定までの手順を追加
 - `node --check supabase-sync.js` を実施
+
+---
+
+## 2026-07-12 Cloudflare Worker・D1同期へ変更
+
+### 変更ファイル
+- `.github/workflows/validate.yml`
+- `CLOUDFLARE_SETUP.md`
+- `PROJECTS.md`
+- `cloudflare-config.js`
+- `cloudflare-sync.js`
+- `cloudflare-worker/package.json`
+- `cloudflare-worker/schema.sql`
+- `cloudflare-worker/src/index.js`
+- `cloudflare-worker/test.mjs`
+- `cloudflare-worker/wrangler.jsonc`
+- `index.html`
+- `log.md`
+
+### 内容
+- Supabaseプロジェクト数の制限を避けるため、同期先をCloudflare Worker＋D1へ変更
+- 家族用キーをWorkerのSecretに保存し、GitHubへ秘密情報を置かない構成へ変更
+- 長男・長女・次女の全記録をD1の1行へJSONとして保存するAPIを追加
+- 端末内へ即時保存し、オンライン時に自動同期する動作を継続
+- 家族用キーの接続、手動同期、接続解除、同期状態表示を追加
+- 許可した画面URLだけから利用できるCORS制御を追加
+- 古い端末データによる上書きを防ぐ更新日時比較を追加
+- Workerの認証、保存、古い更新の拒否を確認する自動テストを追加
+- D1のテーブル作成をGitHub Actionsで検証する処理を追加
+- Supabase専用ファイルと外部ライブラリの読み込みを削除
