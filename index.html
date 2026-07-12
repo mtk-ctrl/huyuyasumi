@@ -64,7 +64,7 @@
           <button class="primary-button" id="previewPaperButton" type="button"><span>📄</span><span><strong>今日のシートを見る</strong><small>印刷前にA4を確認</small></span></button>
           <button class="secondary-button" id="reviewButton" type="button"><span>🌙</span><span><strong>夜の入力を始める</strong><small>紙を見ながらチェック</small></span></button>
         </div>
-        <p class="privacy-note">いまは端末内保存です。使い勝手確認後にSupabase同期へ切り替えます。</p>
+        <p class="privacy-note">記録は端末内へ即保存。クラウド接続後はスマホ・PC間でも同期します。</p>
       </section>
 
       <section class="status-row" aria-label="冒険の記録">
@@ -177,8 +177,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
-  <script src="supabase-config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-sync.js"></script>
+  <script src="cloudflare-config.js"></script>
+  <script src="cloudflare-sync.js"></script>
 </body>
 </html>
